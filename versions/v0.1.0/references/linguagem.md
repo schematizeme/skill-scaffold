@@ -1,0 +1,83 @@
+# Escolha de linguagem — fit + ADR inicial (no dia 0)
+
+> Um projeto novo escolhe linguagem **por serviço**, do **rol sancionado**, por **encaixe com o
+> problema** — e a decisão vira **ADR** logo no dia 0. Este reference guia essa escolha no
+> scaffold. A base é `schematize-engineering/references/linguagens.md`; o detalhe idiomático sai da
+> skill irmã de cada linguagem.
+
+## 1. O rol sancionado (backend)
+
+A casa **não tem "a linguagem única"**; tem o rol e um guia de fit. Backend novo escolhe uma,
+**com ADR (§27) justificando o fit**:
+
+| Linguagem | Skill | Sufixo | Fit típico |
+|---|---|---|---|
+| **Go** | `schematize-go` | `_go` | serviços de rede/API, CLIs, tooling; **default pragmático** |
+| **Rust** | `schematize-rust` | `_rs` | correção/segurança de memória, perf previsível, auth/cripto/parsing; **default quando errar é caro** |
+| **Elixir** | `schematize-elixir` | `_ex` | realtime, alta concorrência tolerante a falha (BEAM/OTP), messaging/streaming |
+| **C#** (.NET) | `schematize-csharp` | `_cs` | ecossistema .NET/enterprise, integração Microsoft, ASP.NET Core/EF |
+| **Zig** | `schematize-zig` | `_zig` | baixo nível, perf máxima com memória explícita, embedded, interop com C |
+| **Ruby** | `schematize-ruby` | `_rb` | prototipagem rápida, scripts/automação, DX de produto (Rails), legado Ruby |
+
+**Frontend:** **Node** (Next.js principal; Astro e outros consolidados) — governado por
+`schematize-web`. É **só frontend**; o server-side do próprio front não reabre Node como backend.
+
+## 2. Fora do rol (não entram em projeto novo)
+
+- **Node como serviço backend** e **PHP** **não recebem serviço novo** — são legado (migram por
+  funcionalidade do módulo quando tocados). Projeto novo **não** os escolhe.
+- **Nova linguagem fora do rol** exige **ADR de exceção** aprovado — não se adota por gosto.
+
+## 3. Guia de fit — a decisão por serviço
+
+Escolha por **encaixe**, não preferência. Regra de fit (do dia 0):
+
+- **auth/cripto** → **Rust** (segurança de memória, input hostil). É o default do
+  `<projeto>_auth_<lang>`, salvo ADR que justifique outro.
+- **gateway/realtime/pub-sub** → **Elixir**.
+- **serviço de rede/API/CLI/tooling** → **Go** (default pragmático).
+- **utilitário de sistema/baixo nível** → **Zig**.
+- **integração .NET/enterprise** → **C#**.
+- **protótipo/script/DX Rails** → **Ruby**.
+- **front** → **Node** (Next/Astro), sempre.
+
+> Se **dois** encaixam, escolha o **default pragmático (Go)** e registre o porquê no ADR. Não se
+> mistura linguagem **dentro do mesmo bounded context** sem ADR.
+
+## 4. O ADR inicial de linguagem (obrigatório no dia 0)
+
+O `/scaffold-new` grava um **ADR inicial** por serviço (em `<projeto>_archive/` ou
+`assets/ADR.md` do repo), no formato da casa:
+
+```
+# ADR-0001 — Linguagem do <projeto>_<ctx>
+
+Status: accepted
+Data: <YYYY-MM-DD>
+
+## Contexto
+<que serviço é, que problema resolve, restrições (perf, segurança, time, ecossistema)>
+
+## Decisão
+<Linguagem X> para <projeto>_<ctx>, do rol sancionado.
+
+## Fit / justificativa
+<por que X encaixa: ex. "auth manipula input hostil e chave de assinatura → Rust (errar é caro)">
+
+## Alternativas descartadas
+<Go/Elixir/... e por que não>
+
+## Consequências
+<skill irmã que rege (schematize-<lang>), sufixo de repo, o que o piso exige nessa linguagem>
+```
+
+Regra: **um ADR por serviço**, no dia 0. Serviço sem ADR de linguagem = decisão por gosto = veto
+do `/scaffold-check`. O ADR `proposed` que nunca vira `accepted`/`rejected` é órfão (a
+`schematize-audit` pega isso).
+
+## 5. O piso NÃO muda com a linguagem
+
+A escolha muda o **como**, nunca o **o quê**. Valem **integralmente**, em qualquer linguagem: os
+pisos de segurança, IAM (app separada), testes+pentest, arquitetura/DDD, ops (promoção/seed/
+isolamento), observabilidade, DoD, archive/índice, overdev (`references/piso.md`). A skill irmã
+especializa a implementação; ela **não** relaxa o piso.

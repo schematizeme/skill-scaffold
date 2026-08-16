@@ -1,0 +1,74 @@
+# scaffold-check — auditar um projeto existente contra o piso do dia 0
+
+> Nem todo projeto nasceu com o `/scaffold-new`. O `/scaffold-check` roda contra um projeto **já
+> existente** e responde: **ele tem o piso da casa?** Enumera cada peça (`references/piso.md` §9),
+> verifica presença **com prova**, aponta o que falta e gera o **checklist de saneamento**.
+> Pareia com a `schematize-audit` (que audita se os *checklists criados* foram sanados; este
+> audita se o *piso* está lá).
+
+## 1. O que o check verifica (as 8 peças do piso)
+
+Para cada peça, o veredito é **presente / ausente / parcial**, sempre **com prova** (não "parece
+que tem"). A tabela é o `references/piso.md` §9; abaixo, o que conta como prova de cada uma.
+
+| # | Peça | Prova de presença (o que procurar) | Bandeira vermelha (ausente/parcial) |
+|---|---|---|---|
+| 1 | **Segurança** | grep não acha segredo no cliente/repo; queries parametrizadas; auth server-side; validação na borda | `NEXT_PUBLIC_`/`VITE_` com segredo; SQL concatenado; authz no cliente |
+| 2 | **Testes + pentest** | test kit roda **verde hoje**; existem testes de rejeição/authz | `TODO: tests`; suíte vermelha; zero teste de rejeição |
+| 3 | **IAM app separada** | existe `<projeto>_auth_<lang>` **+** `<projeto>_authfront` (repos próprios); app delega por OIDC; ID≠email; ≥2 fatores; JWKS | login embutido no core; email como PK; 1 fator; chave no consumidor |
+| 4 | **Ops / isolamento / CI gated** | existe `<projeto>_ops`; fluxo de promoção; seed `/<app>/.env`; user+systemd por serviço; `nproc`; CI só promove verde | deploy à mão/ssh; sem ops; serviços no mesmo user/root; CI sem gate |
+| 5 | **Observabilidade** | health endpoint responde; logs estruturados/métricas/tracing versionados | "loga no stdout e pronto"; sem health |
+| 6 | **DoD (§35)** | gate de PR/entrega (review + testes + archive); `/<slug>-review` existe | merge sem gate; sem DoD |
+| 7 | **Archive/índice** | `<projeto>_archive/` existe e é usado; `MAPA.md`/índice (§39); root limpo | MD gerado solto no root; sem archive |
+| 8 | **Overdev** | `/eng-overdev` disponível; histórico de checklist no archive | — (é o mais leve; a ausência é sinal, não veto duro) |
+
+## 2. Como conduzir (enumerar → provar → classificar)
+
+1. **Inventário do workspace.** Liste os repos irmãos (`ls`), o que cada um é (core/auth/front/
+   ops), e cruze com a topologia esperada (`references/estrutura.md` §3). Falta `auth`? falta
+   `authfront`? falta `ops`? cada ausência é um achado.
+2. **Prove peça por peça** (§1). **Presença exige prova de hoje** — mesma disciplina do "suspeito
+   ≠ achado" da `schematize-audit`/`schematize-pentest`: "tem uma pasta `auth`" não prova IAM
+   baseline; o que prova é ID≠email + ≥2 fatores + OIDC + JWKS **rodando**. Um item "meio-feito"
+   é **parcial**, e parcial conta como falta no gate.
+3. **Classifique** cada peça: `present` / `missing` / `partial`, com **origem** (`repo:caminho`
+   ou "repo inexistente") e **o que falta**.
+4. **ADRs de linguagem:** todo serviço tem ADR de linguagem `accepted`? serviço fora do rol
+   (Node/PHP backend novo) sem ADR de exceção é achado (`references/linguagem.md`).
+
+## 3. O checklist de saneamento (o que fazer com o que falta)
+
+O check **não conserta** — ele aponta e gera o conserto. Cada peça `missing`/`partial` vira um
+item de um **checklist de saneamento** (candidato a `/eng-overdev`), com o comando que resolve:
+
+```
+- [ ] IAM ausente → scaffoldar <projeto>_auth_<lang> + authfront (/<slug>-iam), migrar login embutido pra delegação OIDC
+- [ ] ops ausente → scaffoldar <projeto>_ops (/<slug>-ops): promoção, seed, user+systemd por app, nproc
+- [ ] CI sem gate → amarrar deploy à promoção (dev→teste→git→hml→prd), só promover verde
+- [ ] sem observabilidade → integrar health/logs/métricas/tracing
+- [ ] sem archive → criar <projeto>_archive/, mover MD do root, gerar MAPA/índice (/eng-index)
+- [ ] serviço sem ADR de linguagem → gravar ADR (fit) no dia (retroativo)
+```
+
+> Reaproveitar de verdade: se o projeto é **legado** (Node/PHP backend), o saneamento não é
+> "reescreve tudo hoje" — é **strangler-fig por módulo** (`schematize-node`) com o piso entrando
+> na saída. Mas a **prioridade 0 é sempre o IAM** (app separada) e a segurança.
+
+## 4. O gate
+
+- **Piso são = zero peças `missing`/`partial` do dia 0** (segurança, IAM app-separada, ops/CI
+  gated, testes, DoD, archive — as inegociáveis). A observabilidade e o overdev pesam, mas o veto
+  duro é sobre **segurança + IAM + ops + archive**.
+- **IAM e segurança são prioridade 0:** um projeto sem IAM app-separada **não passa** — o
+  saneamento do auth vem antes de qualquer feature.
+- O check é **read-mostly**: aponta e gera o saneamento; **quem conserta** é o run de saneamento
+  (`/eng-overdev`), com prova. Depois, **rode o check de novo** — a peça só sai da lista quando a
+  reverificação a vê presente.
+- **Saída durável no archive:** o relatório do check mora em `<projeto>_archive/scaffold/<data>.md`
+  (§28), nunca no root.
+
+## 5. Quando rodar
+
+Ao **adotar** um projeto que não nasceu com o scaffold; em **due diligence** de um repo herdado;
+antes de um marco/release (o piso continua lá?); e sempre que a `schematize-audit` de histórico
+apontar dívida estrutural que cheire a "nasceu sem o piso".
