@@ -1,7 +1,7 @@
 # schematize-scaffold
 
 > O **scaffolder da casa** — o blueprint **executável** de "projeto novo da casa", o que dá lastro
-> ao comando `schematize new <projeto>`. Um projeto que **já nasce** com o piso do dia 0: repos por
+> pelo comando `/scaffold-new`. Um projeto que **já nasce** com o piso do dia 0: repos por
 > contexto (`<projeto>_<ctx>_<lang>`), **IAM como app separada** (`<projeto>_auth_<lang>` +
 > `<projeto>_authfront`, delegação OIDC), front separado, `<projeto>_ops` com isolamento por app,
 > CI com deploy gated, testes/pentest, DoD, archive/índice e overdev — com a **linguagem escolhida
@@ -39,12 +39,12 @@ unzip skill-scaffold.zip -d .claude/skills/
 
 ## O que tem dentro
 
-- **SKILL.md** — o contrato: 7 pisos inegociáveis (o piso é dia 0; auth app separada desde o 1º
+- **SKILL.md** — o contrato: 8 pisos inegociáveis (o piso é dia 0; auth app separada desde o 1º
   commit; um repo = um bounded context no workspace; `<projeto>_ops` desde o dia 0; linguagem por
   fit + ADR inicial; archive/índice desde o 1º commit; overdev + DoD como gate) + mapa de references.
 - **references/** — `estrutura` (a topologia canônica), `piso` (o piso de fábrica do dia 0),
   `linguagem` (rol + fit + ADR inicial), `bootstrap` (o passo-a-passo de criar), `check` (auditar o
-  piso de um projeto existente).
+  piso de um projeto existente), `gui` (como a skill vira botão na GUI, via `gui.json`).
 - **assets/commands/** — `/scaffold-help`, `/scaffold-new` (criar projeto novo), `/scaffold-check`
   (auditar o piso), `/scaffold-load`, `/scaffold-claude`, `/scaffold-cc`, `/scaffold-handoff`.
 - **assets/CLAUDE.md** — regra sempre-on: o piso é dia 0; auth app separada (OIDC); ops/archive/DoD

@@ -1,6 +1,21 @@
 # Changelog — schematize-scaffold
 
-Formato: [Keep a Changelog](https://keepachangelog.com/pt-BR/). Versionamento semântico.
+Todas as mudanças relevantes deste pacote, no formato [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/),
+com versionamento [SemVer](https://semver.org/lang/pt-BR/).
+
+
+## [0.3.0] — 2026-08-21
+Saneamento do catálogo conforme a vistoria de 2026-08-21.
+
+### Corrigido
+- **A promessa do `schematize new` saiu**: ✔ verificado — o subcomando **não existe** no binário (`unrecognized subcommand`). O blueprint é executado por **`/scaffold-new`** e auditado por `/scaffold-check`; ficou registrado que, se um dia existir, o lastro é o `SKILL.md`. **Fronteira:** o CLI vive noutro projeto.
+- **Peça 9 (efeito externo) no `/scaffold-check`**, que enumerava só 1..8 — regressão do próprio v0.2.0 —, agora com as **quatro provas** separadas e o como provar hoje.
+- **Overdev coerente entre as três fontes**: **veto em projeto novo** (é peça do dia 0), **achado de saneamento com prazo em projeto existente** (ali é mudança de modo de trabalho, não defeito de segurança que se conserta em minutos). O que não pode é sumir do relatório — que era o efeito de chamá-lo de "só sinal".
+- **"Prototipagem rápida" saiu do fit de Ruby**: nesta skill protótipo exige **ADR com data de virada**, e oferecer uma linguagem como "a de prototipar" convidava o atalho que a skill existe para matar — *o protótipo que dá certo nunca é reescrito: ele vira produção com o piso faltando*.
+
+### Adicionado
+- **`assets/templates/`** — `gitignore.tpl` (segredo fora do git **antes do 1º commit**; *segredo commitado uma vez está vazado para sempre: a ação é rotacionar*) e `env.example.tpl` (o **contrato** de config, com as 4 camadas do piso de efeito externo preenchidas), com um README dizendo **o que não vira template e por quê**.
+- `references/gui.md` deixou de ser órfão: entrou no mapa do `SKILL.md`, no `/scaffold-load` e no README.
 
 ## [0.2.0] — 2026-08-20
 
