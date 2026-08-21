@@ -4,6 +4,17 @@ Todas as mudanças relevantes deste pacote, no formato [Keep a Changelog](https:
 com versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
 
+## [0.4.0] — 2026-08-21
+Segunda leva do saneamento: determinismo, banco no dia 0, archive canônico e o prefixo de comando.
+
+### Adicionado
+- **`bootstrap.md` §0 — Determinismo.** *Se o blueprint admite interpretação, cada execução produz uma árvore distinta — e o `/scaffold-check` passa a auditar contra um alvo móvel.* Datas em **ISO/UTC vindas do ambiente**, convenção de nome por tipo de artefato, **default de linguagem sem "costuma"** (auth → Rust; empate → Go; front → Node), ordem dos passos fixa, e **nada de perguntar no meio** (vira `[REVISAR: negócio]` + `- [H ]`). Com o critério de prova: duas execuções, a mesma árvore.
+- **`piso.md` §4.1 — Banco de dados no dia 0**: um banco por serviço, schema desenhado (ULID/UUIDv7, PII fora do índice, `numeric` para dinheiro, `timestamptz`), **migração `0001` versionada e reversível**, compose de dev com o **banco real**, credencial pelo seeder, app sem DDL em prd, e restore ensaiado. *Banco é onde o erro de dia 0 fica mais caro: schema errado se corrige com migração em produção, não com refatoração.*
+
+### Corrigido
+- **`/<slug>-iam` quebrava em C#.** A tabela de `linguagem.md` ganhou a coluna **"Prefixo de comando"** (conferida contra o `assets/commands/` de cada skill): em C# é **`/cs-iam`**, não `/csharp-iam`. As remissões passaram a `/<prefixo>-iam` em todos os arquivos.
+- **Archive: planta canônica + repo git PRIVADO.** O §7 deixou de descrever um layout próprio e passou a apontar a `schematize-archive` (ADR-0005/0006), com o piso que faltava — *privado porque guarda transcript; próprio porque é o que faz o rastro sobreviver à perda da máquina: archive que só existe no seu disco não é criticidade 0, é uma pasta*.
+
 ## [0.3.0] — 2026-08-21
 Saneamento do catálogo conforme a vistoria de 2026-08-21.
 

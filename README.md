@@ -65,7 +65,7 @@ linguagem sai do **rol sancionado por fit + ADR**.
 - **schematize-audit** — o par: o `/scaffold-check` audita o **piso**; o audit audita se os
   **checklists criados** foram sanados.
 - **schematize-\<lang\>** (go/rust/elixir/csharp/zig/ruby) — a implementação idiomática de cada peça
-  (`/<slug>-iam`, `/<slug>-ops`). **schematize-web** — os fronts. **schematize-pentest** — o oráculo
+  (`/<prefixo>-iam`, `/<prefixo>-ops`). **schematize-web** — os fronts. **schematize-pentest** — o oráculo *(o prefixo NÃO se deriva do nome da skill — a tabela de `references/linguagem.md` tem a coluna; em C# é `/cs-iam`.)*
   que ataca o IAM/authz montado.
 
 ## Co-autoria / patrocínio
