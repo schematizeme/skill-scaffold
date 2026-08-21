@@ -2,7 +2,7 @@
 name: schematize-scaffold
 metadata:
   version: 0.2.0
-description: O scaffolder da casa — o blueprint EXECUTÁVEL de "projeto novo da casa", o que dá lastro ao comando `schematize new <projeto>`. Um projeto que **já nasce** com o piso da casa: repos por contexto no padrão `<projeto>_<ctx>_<lang>`; **IAM como app separada** (`<projeto>_auth_<lang>` + `<projeto>_authfront`) desde o dia 0 com delegação OIDC/OAuth2.1+PKCE; front separado; `<projeto>_ops` (control plane) com isolamento por app (user Linux + systemd hardened, deploy destrutivo por seed); observabilidade integrada; **efeito externo em sink por default de fábrica** (`MAIL_PROVIDER=sink`, Mailpit no compose de dev, domínio de teste em rota nula, cap por execução); CI com deploy gated pelo fluxo de promoção (dev→teste→git→hml→prd); testes de verdade + pentest de rejeição; **IAM baseline 2FA** (senha + Email OTP já conta, passkey núcleo, ID≠email, ReBAC multi-tenant); Definition of Done (§DoD); archive/índice (MAPA §39) obrigatórios; overdev ligado. A **escolha de linguagem** sai do rol sancionado (Go/Rust/Elixir/C#/Zig/Ruby) por **fit + ADR inicial** — nunca por gosto. Traz o **scaffold-new** (o passo-a-passo de criar projeto novo com o piso do dia 0) e o **scaffold-check** (audita um projeto existente e aponta o que falta do piso — pareia com a schematize-audit). Enfatiza o inegociável: **nada de projeto "sem IAM/sem ops pra depois" — o piso é dia 0**. Use SEMPRE que for criar projeto novo, iniciar um repo/serviço, montar o esqueleto de um sistema, decidir a topologia inicial, ou verificar se um projeto existente tem o piso da casa — mesmo sem citar "scaffold". Pareia com o CLI `schematize new` e com a **schematize-engineering** (a BASE que ele materializa: arquitetura §2, IAM, ops, DoD §35, archive §28, índice §39, overdev); a implementação idiomática sai da skill de linguagem escolhida.
+description: O blueprint de PROJETO NOVO da casa — o piso do dia 0, na ordem certa. Rege como um sistema nasce: contenção no workspace, archive antes do código, IAM PRIMEIRO como app separada em `auth.<domain>`, escolha de linguagem por fit + ADR dentro do rol sancionado, repos no padrão `<projeto>_<contexto>[_<lang>]` com o `<projeto>_ops` desde o início, observabilidade integrada (OTel + Grafana/Loki/Tempo/Prometheus), CI/CD com os gates que travam o merge, e o overdev como peça inegociável do fluxo. Entrega o checklist de bootstrap fase a fase (`/scaffold-new`) e a verificação do que já existe (`/scaffold-check`), apontando o que falta antes de escrever a primeira linha de domínio. Use SEMPRE que for começar projeto novo, montar a estrutura inicial de um repo/sistema, decidir a ordem de construção, ou revisar se um projeto existente nasceu com o piso — mesmo sem citar "scaffold". Projeto que começa torto custa mais para endireitar do que para nascer certo.
 ---
 
 # O scaffolder da casa (schematize-scaffold)
@@ -128,3 +128,15 @@ Independente do reference, estes limites nunca são cruzados:
   client/server, segredo só no servidor, a11y, CWV, i18n.
 - **schematize-pentest** — o **oráculo de segurança**: o piso de IAM/authz que o scaffold monta é
   o que a pentest ataca rota por rota (rejeição, cross-tenant, IDOR/BOLA) pra provar que segura.
+
+- **schematize-qa** — o **teste é peça do dia 0**, não coisa da fase 3. O scaffold monta o test kit
+  antes da primeira feature: a pirâmide, o **smoke com self-check** (que prova que o runner sabe
+  reportar FAIL — suíte que nunca falhou está cega), a matriz `simulated` de rota × persona, e os
+  **gates de CI que travam o merge** desde o primeiro commit. Quem é dono do COMO é a
+  `schematize-qa`; o scaffold só garante que a peça exista antes de haver dívida. Projeto que
+  nasce sem gate de teste não ganha gate depois — ganha exceção.
+- **schematize-archive** — a **planta do archive é dela**, não desta skill. A Fase 1 do bootstrap
+  cria o `<projeto>_archive/` **rodando `/archive-init`**, com a árvore canônica da
+  `schematize-archive` (ADR-0005) — inclusive o `git init` e o remote **privado**, que fazem parte
+  do piso de criticidade 0. O scaffold decide *quando* (dia 0, antes do código); a
+  `schematize-archive` decide *o quê* e *onde*.

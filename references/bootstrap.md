@@ -24,8 +24,10 @@ Scaffoldar sem decidir a fronteira é montar um monólito por acidente. Antes de
 
 6. **Confirme a contenção:** o diretório atual é o workspace; tudo nasce **dentro** dele
    (`references/estrutura.md` §1). Nada de `cd ..`.
-7. **Crie `<projeto>_archive/`** já no dia 0 (`context/`, `plan/`, `overdev/`, `index/`, `audit/`,
-   `scan/`, `qa/`). O rastro existe antes do código (`references/piso.md` §7).
+7. **Crie `<projeto>_archive/`** já no dia 0, com a planta CANÔNICA da `schematize-archive`
+   (`references/archive.md`, seção "Estrutura") — ou rode `/archive-init`, que a materializa.
+   Não invente a árvore aqui: planta duplicada foi o achado B2 da vistoria. O rastro existe antes
+   do código (`references/piso.md` §7).
 
 ## Fase 2 — O auth, PRIMEIRO (app separada)
 

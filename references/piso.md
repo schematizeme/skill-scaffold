@@ -29,7 +29,8 @@ Vem montado, valha qual linguagem for:
   integração). "Verde de verdade" = a suíte roda **hoje**, sem `.skip`/assert comentado.
 - **Pentest prova rejeição, rota por rota, campo por campo:** nunca 500 por input hostil, nunca
   coerção de tipo, nunca eco sem escape, nunca vazamento cross-tenant. Base em
-  `schematize-engineering/references/testes.md` + `testes-execucao.md` (§22); arsenal na
+  `schematize-qa` → `references/estrategia.md` e `references/execucao.md` (a disciplina de teste saiu
+  da engineering na extração da Q.A.); arsenal na
   `schematize-pentest`.
 - O scaffold cria a **estrutura de testes** e o alvo de CI no dia 0 — não um `TODO: add tests`.
 

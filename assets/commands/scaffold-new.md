@@ -18,8 +18,8 @@ a topologia **antes** de criar pasta. **Nada é "pra depois".**
 
 ## Fase 1 — Workspace + archive — `references/estrutura.md` §1, `references/piso.md` §7
 - Confirme a **contenção**: tudo nasce **dentro** da pasta atual (nada de `cd ..`).
-- Crie `<projeto>_archive/` (context/plan/overdev/index/audit/scan/qa/scaffold) — o rastro antes
-  do código.
+- Crie `<projeto>_archive/` com a planta canônica da `schematize-archive` (ou rode `/archive-init`)
+  — o rastro antes do código. A árvore tem **um dono só**; não a redefina aqui.
 
 ## Fase 2 — Auth PRIMEIRO (app separada) — `references/estrutura.md` §4, `references/piso.md` §3
 - `<projeto>_auth_<lang>` — o **IdP**, servido em `auth.<domain>`, com o **baseline 2FA**:

@@ -13,7 +13,7 @@ uma traz seu `gui.json`. Skills novas plugam do mesmo jeito.
 ```json
 {
   "actions": [
-    { "label": "Q.A.", "command": "/eng-qa", "needs_project": true, "context": "project", "order": 10 }
+    { "label": "Q.A.", "command": "/qa-plan", "needs_project": true, "context": "project", "order": 10 }
   ]
 }
 ```
@@ -23,7 +23,7 @@ Campos de cada ação:
 | campo          | tipo   | default     | o que faz                                                                 |
 |----------------|--------|-------------|---------------------------------------------------------------------------|
 | `label`        | string | (obrigat.)  | rótulo do botão (curto: "Q.A.", "Pentest").                               |
-| `command`      | string | (obrigat.)  | o que é enviado ao `claude` ao clicar — um slash-command (`/eng-qa`) ou um prompt. |
+| `command`      | string | (obrigat.)  | o que é enviado ao `claude` ao clicar — um slash-command (`/qa-plan`) ou um prompt. O comando tem de EXISTIR em `assets/commands/` de alguma skill: botão apontando para comando removido é botão morto, e o lint do catálogo (`ref-comando`) reprova. |
 | `needs_project`| bool   | `false`     | só habilita o botão com um projeto selecionado.                          |
 | `context`      | string | `"project"` | onde aparece: `"project"` (aba do projeto) ou `"global"` (sempre).       |
 | `order`        | int    | `0`         | ordenação entre as ações (menor primeiro).                               |
