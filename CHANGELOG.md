@@ -4,6 +4,20 @@ Todas as mudanças relevantes deste pacote, no formato [Keep a Changelog](https:
 com versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
 
+## [0.5.0] — 2026-09-30
+Pedido do dono, por **custo**: o agent principal não desenvolve — planeja e despacha; subagents
+executam em `sonnet` por padrão e `opus` só após falha. Regra canônica em `schematize-engineering`
+→ `references/orquestracao.md` §9.
+
+### Adicionado
+- **Piso herdado "Orquestrador não desenvolve; subagent barato executa"** em `SKILL.md`,
+  `assets/CLAUDE.md` e `references/piso.md` §8.1: todo projeto novo (e o `CLAUDE.md` que o scaffold
+  gera) nasce com a orquestração barata.
+
+### Mantido (piso inalterado)
+- Piso do dia 0, auth app separada, ops, DoD/overdev, archive e o efeito externo em sink de
+  fábrica; a tabela-resumo do `/scaffold-check` (9 peças) não muda.
+
 ## [0.4.0] — 2026-08-21
 Segunda leva do saneamento: determinismo, banco no dia 0, archive canônico e o prefixo de comando.
 

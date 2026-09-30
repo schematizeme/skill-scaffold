@@ -147,6 +147,16 @@ pesado→checklist) e o laço que não deixa parar com item aberto. O bootstrap 
 primeiro alvo de overdev — o piso inteiro vira um checklist exaustivo que só fecha **provado**.
 Base em `schematize-engineering/references/overdev.md`.
 
+### 8.1 Orquestração barata herdada (não é peça nova do check)
+
+Todo projeto novo herda o piso **"Orquestrador não desenvolve; subagent barato executa"**
+(`schematize-engineering` → `references/orquestracao.md` §9): o agent principal só planeja,
+decompõe, despacha, supervisiona e revisa; ação onerosa vira micro-tasks/micro-funções executadas
+por subagents em `sonnet` por padrão (falhou → mesmo subagent corrige ≤2 rodadas → re-decompõe →
+só então `opus`, motivo registrado). O `CLAUDE.md` que o scaffold gera carrega esse piso (via
+`/<slug>-claude`); o overdev do bootstrap já sai com o checklist em itens de micro-task com tag
+`[sonnet]`/`[opus: motivo]` (`schematize-overdev-context`).
+
 ## 9. Efeito externo: SINK por default — o piso vira default de FÁBRICA
 
 O projeto novo **nasce seguro**: aqui é onde o piso "efeito externo nunca sai de não-produção"

@@ -61,6 +61,12 @@ Consulte o reference antes de agir — não trabalhe de memória.
   `/eng-overdev`) e **trava** se faltar peça do dia 0 (IAM/segurança/ops/archive). Relatório em
   `<project>_archive/scaffold/`.
 
+9. **Orquestrador não desenvolve; subagent barato executa** (`schematize-engineering` →
+   `references/orquestracao.md` §9). O projeto novo herda o piso: o principal só planeja/despacha/
+   revisa; ação onerosa vira micro-tasks executadas por subagents em `sonnet` por default (mesmo
+   subagent corrige ≤2 rodadas → re-decompõe → só então `opus`, motivo registrado). O `CLAUDE.md`
+   que o scaffold gera para o projeto inclui este piso.
+
 ## Relação com as outras skills
 
 - **schematize-engineering** — a base que este scaffold materializa (arquitetura §2, IAM, ops.md,
