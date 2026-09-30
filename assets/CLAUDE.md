@@ -65,7 +65,7 @@ Consulte o reference antes de agir — não trabalhe de memória.
    `references/orquestracao.md` §9). O projeto novo herda o piso: o principal só planeja/despacha/
    revisa; ação onerosa vira micro-tasks executadas por subagents em `sonnet` por default (mesmo
    subagent corrige ≤2 rodadas → re-decompõe → só então `opus`, motivo registrado). O `CLAUDE.md`
-   que o scaffold gera para o projeto inclui este piso.
+   que o scaffold gera para o projeto inclui este piso. **Sem frota ociosa:** agent idle com pendência executável volta ao trabalho; pendência que depende de outro agent → mata e enfileira com gatilho de dependência; terminou → mata (§9.6).
 
 ## Relação com as outras skills
 

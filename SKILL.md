@@ -115,7 +115,7 @@ Independente do reference, estes limites nunca são cruzados:
 9. **Orquestrador não desenvolve; subagent barato executa** (`schematize-engineering` →
    `references/orquestracao.md` §9). O projeto novo e o `CLAUDE.md` que o scaffold gera herdam o
    piso: principal só planeja/despacha/revisa; subagents em `sonnet` por default; escada mesmo
-   subagent (≤2 rodadas) → re-decompor → `opus` (motivo registrado). Detalhe: `references/piso.md` §8.1.
+   subagent (≤2 rodadas) → re-decompor → `opus` (motivo registrado). **Sem frota ociosa:** agent idle com pendência executável volta ao trabalho; pendência que depende de outro agent → mata e enfileira com gatilho de dependência; terminou → mata (§9.6). Detalhe: `references/piso.md` §8.1.
 
 ## Relação com as outras skills
 
