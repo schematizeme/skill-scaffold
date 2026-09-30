@@ -112,10 +112,7 @@ Independente do reference, estes limites nunca são cruzados:
    de IP/domínio e derrubaria o **OTP de login** de produção — projeto que nasce com o provider real
    por default já nasce com a bomba armada. Detalhe: `references/piso.md` §9, `references/check.md`.
 
-9. **Orquestrador não desenvolve; subagent barato executa** (`schematize-engineering` →
-   `references/orquestracao.md` §9). O projeto novo e o `CLAUDE.md` que o scaffold gera herdam o
-   piso: principal só planeja/despacha/revisa; subagents em `sonnet` por default; escada mesmo
-   subagent (≤2 rodadas) → re-decompor → `opus` (motivo registrado). **Sem frota ociosa:** agent idle com pendência executável volta ao trabalho; pendência que depende de outro agent → mata e enfileira com gatilho de dependência; terminou → mata (§9.6). Detalhe: `references/piso.md` §8.1.
+9. <!-- herdado:engineering/orquestracao:bullet -->**Orquestrador não desenvolve; subagent barato executa** (`schematize-engineering` → `references/orquestracao.md` §9). O principal só planeja/decompõe/despacha/supervisiona/revisa; ação onerosa vira micro-tasks; subagents em `sonnet` por padrão (falhou → mesmo subagent corrige, até 2 rodadas → re-decompõe → só então `opus`, com motivo registrado no checkpoint). No `overdev`, cada item do checklist é executado por subagent `sonnet` e revisado pelo principal (diff + gate) antes do `- [x]`. **Sem frota ociosa:** agent idle com pendência executável volta ao trabalho; pendência que depende de outro agent → mata e enfileira com gatilho de dependência; terminou → mata (§9.6).<!-- /herdado -->
 
 ## Relação com as outras skills
 

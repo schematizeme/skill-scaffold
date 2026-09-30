@@ -61,11 +61,7 @@ Consulte o reference antes de agir — não trabalhe de memória.
   `/eng-overdev`) e **trava** se faltar peça do dia 0 (IAM/segurança/ops/archive). Relatório em
   `<project>_archive/scaffold/`.
 
-9. **Orquestrador não desenvolve; subagent barato executa** (`schematize-engineering` →
-   `references/orquestracao.md` §9). O projeto novo herda o piso: o principal só planeja/despacha/
-   revisa; ação onerosa vira micro-tasks executadas por subagents em `sonnet` por default (mesmo
-   subagent corrige ≤2 rodadas → re-decompõe → só então `opus`, motivo registrado). O `CLAUDE.md`
-   que o scaffold gera para o projeto inclui este piso. **Sem frota ociosa:** agent idle com pendência executável volta ao trabalho; pendência que depende de outro agent → mata e enfileira com gatilho de dependência; terminou → mata (§9.6).
+9. <!-- herdado:engineering/orquestracao:curto -->**Orquestrador não desenvolve; subagent barato executa.** O agent principal só planeja, despacha e revisa; ação onerosa vira micro-tasks para subagents em `sonnet` (falhou → o mesmo subagent corrige, até 2 rodadas → re-decompõe → só então `opus`, com motivo). No overdev, cada item do checklist vai a um subagent e o principal revisa antes do `- [x]`. **Sem frota ociosa:** idle com pendência volta ao trabalho; dependente de outro agent → mata e enfileira com gatilho; terminou → mata (§9.6). Detalhe: `schematize-engineering` → `references/orquestracao.md` §9.<!-- /herdado --> O `CLAUDE.md` que o scaffold gera para o projeto novo inclui este piso.
 
 ## Relação com as outras skills
 
