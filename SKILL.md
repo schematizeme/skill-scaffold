@@ -3,7 +3,9 @@ name: schematize-scaffold
 metadata:
   version: 0.5.2
 description: >-
-  O blueprint de PROJETO NOVO da casa: o piso do dia 0 na ordem certa (workspace, archive, IAM como app separada, linguagem por fit + ADR, repos, CI/CD, observabilidade, overdev). Use ao começar projeto ou repo novo, ou revisar se um existente nasceu com o piso: `/scaffold-new` e `/scaffold-check`.
+  Blueprint de PROJETO NOVO: o piso do dia 0 na ordem certa (workspace, archive, IAM como app separada, linguagem por
+  fit + ADR, repos, CI/CD, observabilidade, overdev). Use ao começar projeto ou repo novo, ou revisar se um existente
+  nasceu com o piso (`/scaffold-new`, `/scaffold-check`).
 ---
 
 # O scaffolder da casa (schematize-scaffold)

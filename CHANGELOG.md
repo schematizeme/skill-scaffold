@@ -15,6 +15,7 @@ com versionamento [SemVer](https://semver.org/lang/pt-BR/).
 - Removidas citações a ADR-0005/0006 (outro repo): cita-se a regra.
 - `scaffold-check.md` e `piso.md` usam o caminho instalado do `check-external-effects.sh`.
 - Description reduzida a <=350 caracteres.
+- **Description** reduzida (~270 chars) para caber no orçamento de listagem (soma das 31 skills ≤ 8500; o Claude Code corta a listagem acima disso).
 
 ## [0.5.2] — 2026-09-30
 O piso de orquestração passa a ser **herdado** da base em vez de copiado à mão: uma mudança na engineering não exige mais editar 38 arquivos.
