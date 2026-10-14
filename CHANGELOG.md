@@ -4,6 +4,13 @@ Todas as mudanças relevantes deste pacote, no formato [Keep a Changelog](https:
 com versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
 
+## [0.6.0] — 2026-10-14
+Saneamento pelo gate novo da skill-dev; sem mudança de piso próprio.
+
+### Alterado
+- Blocos herdados `engineering/precedencia` (variante `dominio`) e `engineering/orquestracao` inseridos onde faltavam e sincronizados (`tools/sync-herdados.mjs`).
+- Description reduzida para ≤190 caracteres (orçamento do catálogo, 45 skills).
+
 ## [0.5.4] — 2026-10-14
 Ressincronização dos blocos herdados com a engineering v0.27.0; sem mudança de piso próprio.
 
