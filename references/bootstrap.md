@@ -121,7 +121,7 @@ O IAM é dia 0 e é o coração do piso — então vem cedo, não por último.
 
 ```
 - [ ] Fase 0: slug, bounded contexts, linguagem+ADR por serviço, domínio, plano no archive
-- [ ] <projeto>_archive/ criado (context/plan/overdev/index/audit/scan/qa)
+- [ ] <projeto>_archive/ criado conforme a planta de `schematize-archive → references/archive.md`
 - [ ] <projeto>_auth_<lang> — IdP com baseline 2FA (ID≠email, senha+OTP, passkey, ReBAC, OIDC/JWKS)
 - [ ] <projeto>_authfront — front de auth
 - [ ] app principal delega ao auth por OIDC/PKCE (sem login embutido)

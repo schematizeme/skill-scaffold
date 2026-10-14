@@ -70,7 +70,7 @@ Consulte o reference antes de agir — não trabalhe de memória.
 - **schematize-audit** — o par: o `/scaffold-check` audita o **piso**; o audit audita se os
   **checklists criados** foram sanados.
 - **schematize-<lang>** (go/rust/elixir/csharp/zig/ruby) — a implementação idiomática de cada peça
-  (`/<prefixo>-iam`, `/<prefixo>-ops`). **schematize-web** — os fronts. **schematize-pentest** — o *(o prefixo NÃO se deriva do nome da skill — a tabela de `references/linguagem.md` tem a coluna; em C# é `/cs-iam`.)*
+  (`/<prefixo>-iam`, `/<prefixo>-ops`). **schematize-web** — os fronts. **schematize-pentest** — o *(o prefixo NÃO se deriva do nome da skill — ver `schematize-engineering → references/linguagens.md`; em C# é `/cs-iam`.)*
   oráculo que ataca o IAM/authz montado.
 
 ## Gestão de contexto (sessões longas)

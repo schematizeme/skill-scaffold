@@ -2,7 +2,8 @@
 name: schematize-scaffold
 metadata:
   version: 0.5.2
-description: O blueprint de PROJETO NOVO da casa — o piso do dia 0, na ordem certa. Rege como um sistema nasce: contenção no workspace, archive antes do código, IAM PRIMEIRO como app separada em `auth.<domain>`, escolha de linguagem por fit + ADR dentro do rol sancionado, repos no padrão `<projeto>_<contexto>[_<lang>]` com o `<projeto>_ops` desde o início, observabilidade integrada (OTel + Grafana/Loki/Tempo/Prometheus), CI/CD com os gates que travam o merge, e o overdev como peça inegociável do fluxo. Entrega o checklist de bootstrap fase a fase (`/scaffold-new`) e a verificação do que já existe (`/scaffold-check`), apontando o que falta antes de escrever a primeira linha de domínio. Use SEMPRE que for começar projeto novo, montar a estrutura inicial de um repo/sistema, decidir a ordem de construção, ou revisar se um projeto existente nasceu com o piso — mesmo sem citar "scaffold". Projeto que começa torto custa mais para endireitar do que para nascer certo.
+description: >-
+  O blueprint de PROJETO NOVO da casa: o piso do dia 0 na ordem certa (workspace, archive, IAM como app separada, linguagem por fit + ADR, repos, CI/CD, observabilidade, overdev). Use ao começar projeto ou repo novo, ou revisar se um existente nasceu com o piso: `/scaffold-new` e `/scaffold-check`.
 ---
 
 # O scaffolder da casa (schematize-scaffold)
@@ -97,20 +98,12 @@ Independente do reference, estes limites nunca são cruzados:
    e a **Definition of Done (§35)** como gate de entrega. O scaffold não fecha "quase pronto": o
    bootstrap só termina quando o piso **inteiro** está de pé, provado (não auto-declarado).
 
-8. **Projeto novo NASCE com o efeito externo em SINK — default de fábrica, não lembrete.** É
-   aqui que o piso "efeito externo nunca sai de não-produção" (`schematize-engineering` →
-   `references/efeitos-externos.md`) vira **default**: o `.env.example`/seed gerado já traz
-   **`APP_ENV`**, **`MAIL_PROVIDER=sink`**, **`TEST_MAIL_DOMAIN=test.<domain>`** e
-   **`MAIL_MAX_PER_RUN=50`**; o **`docker-compose` de dev já sobe o Mailpit** (UI/API `:8025` pro
-   teste **ler** a caixa, SMTP `:1025`); o **guard mora dentro do provider** (destinatário fora do
-   domínio de teste com `APP_ENV != prd` → **erro**, fail-closed) e nasce com o **teste que vê a
-   recusa**; fixture/seed/factory/persona só emitem `<papel>+<run-id>-<n>@test.<domain>`. **VETADO**
-   scaffoldar com provedor real ligado por default fora de `prd`, com chave de prd no `.env` de
-   não-prd, sem cap por execução ou com `@gmail.com`/caixa real em template. O `/scaffold-check`
-   confere esse piso (sink default, guard, cap, domínio de teste) como **9ª peça**, com veto duro
-   em projeto que envia. **Por quê:** um laço disparou **>5.000 e-mails reais**, queimou reputação
-   de IP/domínio e derrubaria o **OTP de login** de produção — projeto que nasce com o provider real
-   por default já nasce com a bomba armada. Detalhe: `references/piso.md` §9, `references/check.md`.
+8. **Projeto novo NASCE com o efeito externo em SINK** — `.env.example` com `APP_ENV`,
+   `MAIL_PROVIDER=sink`, `TEST_MAIL_DOMAIN=test.<domain>`, `MAIL_MAX_PER_RUN=50`; Mailpit no compose
+   de dev; guard dentro do provider (fail-closed) com teste que vê a recusa; nenhum provedor real
+   ligado por default fora de `prd`. O `/scaffold-check` confere isso como **9ª peça**, com veto duro.
+   Regra, motivo (incidente de >5.000 e-mails reais) e piso completo: `schematize-engineering →
+   references/efeitos-externos.md`; scaffold: `references/piso.md` §9, `references/check.md`.
 
 9. <!-- herdado:engineering/orquestracao:bullet -->**Orquestrador não desenvolve; subagent barato executa** (`schematize-engineering` → `references/orquestracao.md` §9). O principal só planeja/decompõe/despacha/supervisiona/revisa; ação onerosa vira micro-tasks; subagents em `sonnet` por padrão (falhou → mesmo subagent corrige, até 2 rodadas → re-decompõe → só então `opus`, com motivo registrado no checkpoint). No `overdev`, cada item do checklist é executado por subagent `sonnet` e revisado pelo principal (diff + gate) antes do `- [x]`. **Sem frota ociosa:** agent idle com pendência executável volta ao trabalho; pendência que depende de outro agent → mata e enfileira com gatilho de dependência; terminou → mata (§9.6).<!-- /herdado -->
 
@@ -119,16 +112,16 @@ Independente do reference, estes limites nunca são cruzados:
 - **schematize-engineering** — a **BASE** que este scaffold materializa. Onde a engenharia
   descreve o piso (**arquitetura §2** repos/bounded context/ops, **IAM** app separada, **ops.md**
   isolamento/seed/promoção, **DoD §35**, **archive §28**, **índice/MAPA §39**, **overdev**), esta
-  skill dá o **passo-a-passo de instanciá-lo do zero**.
+  skill dá o **passo-a-passo de instanciá-lo do zero**. *(O blueprint é executado por `/scaffold-new`; não existe subcomando `schematize new` no CLI.)*
 
-> **Sobre o `schematize new`:** ✔ verificado em 2026-08-21 — **esse subcomando não existe** no binário `schematize` (as fronteiras do CLI hoje são `skills`, `overdev`, `archive`, `doctor`, `graph`, `db`, …). A skill dizia dar "lastro" a um comando inexistente, o que é promessa sem entrega. Se algum dia ele existir, o lastro é este documento; enquanto não existe, **o blueprint é executado por `/scaffold-new`** (aqui) e auditado por `/scaffold-check`. **Fronteira:** o CLI vive noutro projeto (`schematize_app`), fora do escopo deste catálogo.
 - **schematize-audit** — o **par de auditoria**. O `scaffold-check` verifica se o **piso do dia 0**
   está lá (IAM/ops/CI/DoD/archive); a `schematize-audit` verifica se **os checklists criados foram
   sanados**. O scaffold monta o piso; o audit prova que o que foi prometido depois foi entregue.
 - **schematize-go / rust / elixir / csharp / zig / ruby** — a **implementação idiomática** de cada
   peça scaffoldada. O scaffold decide *que* o auth é app separada em Rust; a `schematize-rust`
-  diz *como* escrever esse auth. Cada uma traz seu `/<prefixo>-iam` e `/<prefixo>-ops` que scaffoldam a *(o prefixo NÃO se deriva do nome da skill — a tabela de `references/linguagem.md` tem a coluna; em C# é `/cs-iam`.)*
-  peça na linguagem.
+  diz *como* escrever esse auth. Cada uma traz seu `/<prefixo>-iam` e `/<prefixo>-ops`, que
+  scaffoldam a peça na linguagem (o prefixo não se deriva do nome da skill: ver
+  `schematize-engineering → references/linguagens.md`; em C# é `/cs-iam`).
 - **schematize-web** — o **front** (o do produto **e** o `<projeto>_authfront`): fronteira
   client/server, segredo só no servidor, a11y, CWV, i18n.
 - **schematize-pentest** — o **oráculo de segurança**: o piso de IAM/authz que o scaffold monta é
@@ -142,6 +135,6 @@ Independente do reference, estes limites nunca são cruzados:
   nasce sem gate de teste não ganha gate depois — ganha exceção.
 - **schematize-archive** — a **planta do archive é dela**, não desta skill. A Fase 1 do bootstrap
   cria o `<projeto>_archive/` **rodando `/archive-init`**, com a árvore canônica da
-  `schematize-archive` (ADR-0005) — inclusive o `git init` e o remote **privado**, que fazem parte
+  `schematize-archive` — inclusive o `git init` e o remote **privado**, que fazem parte
   do piso de criticidade 0. O scaffold decide *quando* (dia 0, antes do código); a
   `schematize-archive` decide *o quê* e *onde*.

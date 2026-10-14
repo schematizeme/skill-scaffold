@@ -4,6 +4,18 @@ Todas as mudanças relevantes deste pacote, no formato [Keep a Changelog](https:
 com versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
 
+## [0.5.3] — 2026-10-14
+
+### Corrigido
+- Frase quebrada em "Relação com as outras skills" (prefixo de comando) reescrita; nota histórica sobre `schematize new` reduzida a uma linha (o histórico mora aqui).
+- ADR inicial de linguagem agora em `<projeto>_archive/decisoes/ADR-NNNN-linguagem-<ctx>.md` (antes "archive ou `assets/ADR.md`", caminho que não existe).
+- `linguagem.md`: a tabela do rol (com prefixo de comando) é ponteiro para `schematize-engineering → references/linguagens.md`; removido o "default pragmático Go" local (desempate só na base).
+- `bootstrap.md` aponta para a planta do archive da `schematize-archive` em vez de listar 7 pastas.
+- Bloco de efeito externo no SKILL.md reduzido a resumo + ponteiro para `references/efeitos-externos.md` da engineering; bloco de orquestração (herdado) mantido.
+- Removidas citações a ADR-0005/0006 (outro repo): cita-se a regra.
+- `scaffold-check.md` e `piso.md` usam o caminho instalado do `check-external-effects.sh`.
+- Description reduzida a <=350 caracteres.
+
 ## [0.5.2] — 2026-09-30
 O piso de orquestração passa a ser **herdado** da base em vez de copiado à mão: uma mudança na engineering não exige mais editar 38 arquivos.
 

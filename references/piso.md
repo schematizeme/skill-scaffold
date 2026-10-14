@@ -126,8 +126,8 @@ irmão dos diretórios de microserviços.
 
 - **A planta é UMA, e não é definida aqui:** `schematize-archive` → `references/archive.md` é a
   **canônica** (pastas, convenção de nome, o que nunca entra, retenção, recuperação). *Havia três
-  layouts concorrentes no catálogo, e o efeito era um ADR gravado num lugar e procurado noutro —
-  ADR-0005/ADR-0006 fecharam isso.*
+  layouts concorrentes no catálogo, e o efeito era um ADR gravado num lugar e procurado noutro; a regra
+  agora é uma planta só, a da `schematize-archive`.*
 - **É um repositório git PRÓPRIO e PRIVADO** (`gh repo create <org>/<projeto>_archive --private`),
   não uma pasta dentro do repo do serviço e não algo gitignorado. **Privado** porque ele guarda
   transcript de sessão; **próprio** porque é o que faz o rastro **sobreviver à perda da máquina** —
@@ -222,7 +222,7 @@ reputação em jogo.
 - **Fixture/seed/factory/persona/demo/carga** só emitem `<papel>+<run-id>-<n>@test.<domain>`.
   **VETADO** no template gerado: `@gmail.com`/`@hotmail.com`/`@outlook.com` e afins, domínio de
   terceiro/cliente, **e-mail de pessoa real (inclusive o seu)** e o **domínio de produção**.
-- **Gate no CI do dia 0:** `scripts/check-external-effects.sh` (da `schematize-engineering`)
+- **Gate no CI do dia 0:** `.claude/skills/schematize-scaffold/scripts/check-external-effects.sh`
   plugado no pipeline — trava em endereço de caixa real em `test*/`/`seed*/`/`fixtures/`, em chave
   de provedor não-sandbox no `.env` de não-prd e em envio sem cap.
 - **O DNS do domínio de teste é tarefa do dia 0**, não "depois que subir": null MX + SPF `-all` +

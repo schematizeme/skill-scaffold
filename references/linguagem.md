@@ -10,20 +10,10 @@
 A casa **não tem "a linguagem única"**; tem o rol e um guia de fit. Backend novo escolhe uma,
 **com ADR (§27) justificando o fit**:
 
-| Linguagem | Skill | Sufixo de repo | **Prefixo de comando** | Fit típico |
-|---|---|---|---|---|
-| **Go** | `schematize-go` | `_go` | `/go-*` | serviços de rede/API, CLIs, tooling; **default pragmático** |
-| **Rust** | `schematize-rust` | `_rs` | `/rust-*` | correção/segurança de memória, perf previsível, auth/cripto/parsing; **default quando errar é caro** |
-| **Elixir** | `schematize-elixir` | `_ex` | `/elixir-*` | realtime, alta concorrência tolerante a falha (BEAM/OTP), messaging/streaming |
-| **C#** (.NET) | `schematize-csharp` | `_cs` | **`/cs-*`** (não `csharp-`) | ecossistema .NET/enterprise, integração Microsoft, ASP.NET Core/EF |
-| **Zig** | `schematize-zig` | `_zig` | `/zig-*` | baixo nível, perf máxima com memória explícita, embedded, interop com C |
-| **Ruby** | `schematize-ruby` | `_rb` | `/ruby-*` | produto com Rails (DX e velocidade de entrega **com o piso**), scripts/automação, legado Ruby |
-
-> **A coluna do prefixo existe porque o comando NÃO se deriva do sufixo nem do nome da skill.**
-> Em C#, a skill é `schematize-csharp`, o sufixo de repo é `_cs` e o comando é **`/cs-iam`** — quem
-> montasse o comando a partir do nome da skill escreveria `/csharp-iam`, que **não existe**. A
-> referência do dia 0 (`/<prefixo>-iam`) resolve com esta coluna, e ela foi conferida contra
-> `assets/commands/` de cada skill em 2026-08-21.
+A tabela do rol (linguagem, skill, sufixo de repo, **prefixo de comando**, fit) vive em
+`schematize-engineering → references/linguagens.md` — não é repetida aqui. Regra do scaffold: o
+`/scaffold-new` resolve o sufixo do repo e o `/<prefixo>-iam` / `/<prefixo>-ops` por aquela tabela
+(em C#: sufixo `_cs`, comando `/cs-iam`, não `/csharp-iam`).
 
 **Frontend:** **Node** (Next.js principal; Astro e outros consolidados) — governado por
 `schematize-web`. É **só frontend**; o server-side do próprio front não reabre Node como backend.
@@ -38,10 +28,10 @@ A casa **não tem "a linguagem única"**; tem o rol e um guia de fit. Backend no
 
 Escolha por **encaixe**, não preferência. Regra de fit (do dia 0):
 
-- **auth/cripto** → **Rust** (segurança de memória, input hostil). É o default do
-  `<projeto>_auth_<lang>`, salvo ADR que justifique outro.
+- **auth/cripto** → **Rust** (segurança de memória, input hostil). Encaixa o
+  `<projeto>_auth_<lang>`; outra escolha exige ADR com o fit.
 - **gateway/realtime/pub-sub** → **Elixir**.
-- **serviço de rede/API/CLI/tooling** → **Go** (default pragmático).
+- **serviço de rede/API/CLI/tooling** → **Go**.
 - **utilitário de sistema/baixo nível** → **Zig**.
 - **integração .NET/enterprise** → **C#**.
 - **produto Rails / script / automação** → **Ruby**.
@@ -54,13 +44,13 @@ Escolha por **encaixe**, não preferência. Regra de fit (do dia 0):
 > entrega **com** o piso (Rails para produto, scripts, automação), como qualquer outra do rol.
 - **front** → **Node** (Next/Astro), sempre.
 
-> Se **dois** encaixam, escolha o **default pragmático (Go)** e registre o porquê no ADR. Não se
+> Se **dois** encaixam, aplique o desempate de `schematize-engineering → references/linguagens.md` e registre o porquê no ADR. Não se
 > mistura linguagem **dentro do mesmo bounded context** sem ADR.
 
 ## 4. O ADR inicial de linguagem (obrigatório no dia 0)
 
-O `/scaffold-new` grava um **ADR inicial** por serviço (em `<projeto>_archive/` ou
-`assets/ADR.md` do repo), no formato da casa:
+O `/scaffold-new` grava um **ADR inicial** por serviço em
+`<projeto>_archive/decisoes/ADR-NNNN-linguagem-<ctx>.md`, no formato da casa:
 
 ```
 # ADR-0001 — Linguagem do <projeto>_<ctx>

@@ -25,7 +25,7 @@ a topologia **antes** de criar pasta. **Nada é "pra depois".**
 - `<projeto>_auth_<lang>` — o **IdP**, servido em `auth.<domain>`, com o **baseline 2FA**:
   ID≠email (ULID/UUIDv7), senha argon2id+HIBP **+** Email OTP (já é 2FA), **passkey núcleo**,
   ReBAC multi-tenant, deny-by-default, **OIDC/OAuth2.1+PKCE**, chave só aqui + **JWKS**. Use o
-  `/<prefixo>-iam` da linguagem. *(o prefixo NÃO se deriva do nome da skill — a tabela de `references/linguagem.md` tem a coluna; em C# é `/cs-iam`.)*
+  `/<prefixo>-iam` da linguagem. *(o prefixo NÃO se deriva do nome da skill — ver `schematize-engineering → references/linguagens.md`; em C# é `/cs-iam`.)*
 - `<projeto>_authfront` — front de login/registro/recuperação/gestão de fatores (`schematize-web`).
 - O app principal nasce **cliente OIDC** do auth — **nunca** login embutido.
 

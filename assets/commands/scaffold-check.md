@@ -39,7 +39,7 @@ OIDC + JWKS **rodando** (mesma disciplina do "suspeito ≠ achado"). Parcial con
    - **domínio de teste em ROTA NULA** (`TEST_MAIL_DOMAIN=test.<domain>` com **null MX**), e
      **nenhum** `@gmail.com`/`@hotmail.com`/e-mail de pessoa real em seed, fixture ou persona.
 
-   **Como provar hoje:** `bash scripts/check-external-effects.sh .` → exit 0; e o teste do guard
+   **Como provar hoje:** `bash .claude/skills/schematize-scaffold/scripts/check-external-effects.sh .` → exit 0; e o teste do guard
    rodando e **falhando de propósito** uma vez. *(Esta peça existia no `SKILL.md` e no `CLAUDE.md`
    da skill e **faltava aqui** — o comando enumerava 1..8 e parava, uma regressão do próprio
    v0.2.0. Achado da vistoria de 2026-08-21.)*
@@ -49,7 +49,7 @@ Cheque também: todo serviço tem **ADR de linguagem** `accepted`? backend novo 
 
 ## 3. Checklist de saneamento (`references/check.md` §3)
 Cada peça `missing`/`partial` vira um item (candidato a `/eng-overdev`) com o comando que resolve
-(scaffoldar auth via `/<prefixo>-iam`, ops via `/<prefixo>-ops`, amarrar CI ao fluxo, criar archive + *(o prefixo NÃO se deriva do nome da skill — a tabela de `references/linguagem.md` tem a coluna; em C# é `/cs-iam`.)*
+(scaffoldar auth via `/<prefixo>-iam`, ops via `/<prefixo>-ops`, amarrar CI ao fluxo, criar archive + *(o prefixo NÃO se deriva do nome da skill — ver `schematize-engineering → references/linguagens.md`; em C# é `/cs-iam`.)*
 `/eng-index`, gravar ADR retroativo). Se for **legado** (Node/PHP backend), o saneamento é
 **strangler-fig por módulo** com o piso na saída — mas **prioridade 0 é IAM + segurança**.
 
